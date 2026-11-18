@@ -1,17 +1,21 @@
 """Стани лабораторної роботи в Lab Tracker."""
 
-# Перелік станів роботи (чорновий варіант).
+# Перелік станів роботи — відповідно до spec/vision.md, розділ 5.
 STATUSES = [
-    "not_started",
-    "in_progress",
-    "submitted",
+    "not_started",  # не розпочата
+    "in_progress",  # виконується
+    "submitted",    # здана
+    "returned",     # повернута на доопрацювання
+    "defended",     # захищена (кінцевий стан)
 ]
 
 # Дозволені переходи між станами: стан -> множина наступних станів.
 TRANSITIONS = {
     "not_started": {"in_progress"},
     "in_progress": {"submitted"},
-    "submitted": set(),
+    "submitted": {"defended", "returned"},
+    "returned": {"submitted"},
+    "defended": set(),
 }
 
 
